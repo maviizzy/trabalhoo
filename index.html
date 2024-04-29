@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Moda</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        #container {
+            width: 80%;
+            margin: 0 auto;
+            text-align: center;
+        }
+        #wardrobe {
+            margin-top: 20px;
+        }
+        .item {
+            display: inline-block;
+            margin: 10px;
+            cursor: pointer;
+        }
+        #character {
+            margin-top: 50px;
+            position: relative;
+            width: 200px;
+            height: 400px;
+            background-image: url('character.png');
+            background-size: cover;
+        }
+        .clothing {
+            position: absolute;
+            width: 100px;
+            height: auto;
+            cursor: pointer;
+        }
+        #hat { top: 20px; left: 50px; }
+        #top { top: 100px; left: 50px; }
+        #bottom { top: 200px; left: 50px; }
+        #shoes { top: 320px; left: 50px; }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Jogo de Moda</h1>
+        <div id="wardrobe">
+            <h2>Guarda-Roupa</h2>
+            <img class="item" src="hat.png" alt="Chapéu" draggable="true" ondragstart="drag(event)" id="hat">
+            <img class="item" src="top.png" alt="Topo" draggable="true" ondragstart="drag(event)" id="top">
+            <img class="item" src="bottom.png" alt="Calça" draggable="true" ondragstart="drag(event)" id="bottom">
+            <img class="item" src="shoes.png" alt="Sapatos" draggable="true" ondragstart="drag(event)" id="shoes">
+        </div>
+        <div id="character" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <img src="" alt="Chapéu" id="hatSlot" class="clothing">
+            <img src="" alt="Topo" id="topSlot" class="clothing">
+            <img src="" alt="Calça" id="bottomSlot" class="clothing">
+            <img src="" alt="Sapatos" id="shoesSlot" class="clothing">
+        </div>
+    </div>
+
+    <script>
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            var draggableElement = document.getElementById(data);
+            var dropzone = ev.target;
+
+            if (dropzone.tagName === 'IMG' || dropzone.tagName === 'DIV') {
+                dropzone.parentNode.insertBefore(draggableElement, dropzone);
+            } else {
+                dropzone.appendChild(draggableElement);
+            }
+        }
+    </script>
+</body>
+</html>
